@@ -1,0 +1,458 @@
+/* ---------- Reset & Base ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Prevent horizontal scroll and extra space */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* hides horizontal overflow */
+}
+
+/* Make main content fit within the viewport */
+.main-container {
+  width: 100%;
+  max-width: 200%;
+  box-sizing: border-box;
+}
+
+/* Optional: remove extra bottom spacing */
+.featured-offers {
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+
+body {
+  background-color: #fdf9f7;
+  color: #333;
+  line-height: 1.6;
+  object-fit: cover;
+  height: 1000%;
+  width: 1000%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ---------- Layout Containers ---------- */
+.container {
+  width: 180%;                  
+  max-width: 1400px;
+  margin: 0 auto;
+ 
+  
+  
+  
+}
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(90deg, #b91c1c, #7f1d1d);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 180%;                 
+  max-width: 1200px;
+  height: auto;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.brand-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fef3c7;
+  letter-spacing: 1px;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav a {
+  font-weight: 500;
+  color: #fcd9d9;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #fef3c7;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  background: #7f1d1d;
+  color: #fef3c7;
+  margin-top: 3rem;
+  width: 1000%;                  
+  max-width: 1200px;
+}
+
+/* ---------- Buttons ---------- */
+.btn,
+.btn-small {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  background-color: #6b3a14;
+  color: #fef3c7;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  margin: 1rem;
+       }
+  
+
+.btn:hover,
+.btn-small:hover {
+  background-color: #8c4c1a;
+  transform: translateY(-2px);
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* ---------- Hero Section ---------- */
+.home-hero {
+  text-align: center;
+  padding: 10rem 2rem;
+
+ 
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1751906491847-6f6712b145af?w=1200&auto=format&fit=crop&q=60") center/cover ;
+  color: #fef3c7;
+  height: 1000px;
+  
+  
+  width: 1000%;                  
+  max-width: 1200px;
+  height: auto;
+  
+}
+
+.home-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.home-hero p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #fde68a;
+}
+
+.home-hero img{
+  object-fit: cover;
+  height: 1000px;
+  width: 1000px;
+  border-radius: 50px;
+}
+/* ---------- Featured Offers / Cards ---------- */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 1.5rem  1.5rem;
+ 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 80%;                  
+  max-width: 700px;
+}
+
+.card h1{
+  display: flex;
+  justify-content: center;
+}
+
+
+.card h3 {
+  margin-bottom: 0.5rem;
+  color: #6b3a14;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #555;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- Filter Buttons ---------- */
+.filter-buttons {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.filter-buttons button {
+  background-color: #eee;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-buttons button:hover {
+  background-color: #ddd;
+}
+
+.filter-buttons .active {
+  background-color: #6b3a14;
+  color: #fff;
+}
+
+/* ---------- Crafts Preview Section ---------- */
+.home-crafts-preview {
+  text-align: center;
+  margin-top: 4rem;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 100%;                  
+  max-width: 1200px; 
+ 
+}
+
+.crafts-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+
+}
+
+.crafts-preview img {
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth animation */
+}
+
+.crafts-preview img:hover {
+  transform: scale(1.05); /* zoom in slightly */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* deeper shadow */
+  cursor: pointer; /* pointer cursor */
+}
+
+
+
+/* ---------- Stats ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+  gap: 1rem;
+  text-align: center;
+  margin-top: 3rem ;
+  margin-bottom: 3rem;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 100%;                  
+  max-width: 1200px; 
+ 
+ 
+}
+.stat {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.stat h3 {
+  font-size: 1.8rem;
+  color: #6b3a14;
+  
+}
+
+.stat p {
+  color: #555;
+  
+}
+.stat:hover {
+  transform: translateY(-6px) scale(1.03);
+  background-color: #f0b429;      /* accent background on hover */
+  color: #fff;                    /* change text color */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+
+/* ---------- Forms ---------- */
+.form {
+  display: grid;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 2rem;
+ 
+}
+
+.form input,
+.form select,
+.form textarea {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #7b0909;
+  font-size: 1rem;
+  width: 100%;
+  background-color: #fff;
+  color: #333;
+  
+}
+
+.form textarea {
+  min-height: 120px;
+  resize: vertical;
+  
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+
+.form button {
+  background-color: #6b3a14;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+  background-color: #8c4c1a;
+}
+
+/* ---------- Crafts Page ---------- */
+.crafts-section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+
+}
+
+.card-image {
+  width: 100%;
+  height: 160px;
+ 
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  
+}
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+/* ---------- CTA ---------- */
+/* ---------- CTA Section ---------- */
+.cta {
+  background-color: #ffe2c7;      /* soft warm background */
+  padding: 3rem 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 900px;               /* keep it centered and not too wide */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.cta p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+/* CTA Button */
+.cta .btn {
+  background-color: #4b2e0e;   /* dark brown */
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.cta .btn:hover {
+  background-color: #f0b429;   /* golden hover */
+  color: #222;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+/* Responsive */
+@media (max-width: 0px) {
+  .cta {
+    padding: 4rem 1rem;
+  }
+
+  .cta p {
+    font-size: 0rem;
+  }
+}
