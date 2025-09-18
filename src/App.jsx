@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
+import "./App.css"; 
 
 /* -------------------------- Initial Mock Data -------------------------- */
 const INITIAL_ARTISAN_OFFERS = [
@@ -17,8 +17,8 @@ const INITIAL_STAGES = [
 
 /* -------------------------- App -------------------------- */
 function App() {
-  const [artisanOffers, setArtisanOffers] = useState([...INITIAL_ARTISAN_OFFERS]);
-  const [stages, setStages] = useState([...INITIAL_STAGES]);
+  const [artisanOffers, setArtisanOffers] = useState(INITIAL_ARTISAN_OFFERS);
+  const [stages, setStages] = useState(INITIAL_STAGES);
 
   return (
     <BrowserRouter>
@@ -100,9 +100,9 @@ function Home({ artisanOffers }) {
       <section className="home-crafts-preview">
         <h2>Discover our crafts</h2>
         <div className="crafts-preview">
-          <img src="https://media.istockphoto.com/id/2178507792/fr/photo/artiste-f%C3%A9minine-d%C3%A9corant-et-peignant-des-tasses-en-argile-en-c%C3%A9ramique-faites-%C3%A0-la-main-dans.webp?a=1&b=1&s=612x612&w=0&k=20&c=3A7kynIecatuVe39nTJPD8oN_vlmue22JosxkaZXKy8=" title="Pottery" height={"200px"} width={"200px"} />
-          <img src="https://media.istockphoto.com/id/546770268/fr/photo/femme-designer-fabrique-et-con%C3%A7oit-des-bijoux-en-atelier.webp?a=1&b=1&s=612x612&w=0&k=20&c=uqcGSPiFKJKCHOXTDkuPGso_bX4YvT8ndjsL6pAnmYc=" title="Jewelry" height={"200px"} width={"200px"} />
-          <img src="https://images.unsplash.com/photo-1591944489410-16ec1074a18e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dGFpbG9yaW5nfGVufDB8fDB8fHww" title="Tailoring" height={"200px"} width={"200px"} />
+          <img src="https://media.istockphoto.com/id/2178507792/fr/photo/artiste-f%C3%A9minine-d%C3%A9corant-et-peignant-des-tasses-en-argile-en-c%C3%A9ramique-faites-%C3%A0-la-main-dans.webp?a=1&b=1&s=612x612&w=0&k=20&c=3A7kynIecatuVe39nTJPD8oN_vlmue22JosxkaZXKy8=" title="Pottery" height="200" width="200" />
+          <img src="https://media.istockphoto.com/id/546770268/fr/photo/femme-designer-fabrique-et-con%C3%A7oit-des-bijoux-en-atelier.webp?a=1&b=1&s=612x612&w=0&k=20&c=uqcGSPiFKJKCHOXTDkuPGso_bX4YvT8ndjsL6pAnmYc=" title="Jewelry" height="200" width="200" />
+          <img src="https://images.unsplash.com/photo-1591944489410-16ec1074a18e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dGFpbG9yaW5nfGVufDB8fDB8fHww" title="Tailoring" height="200" width="200" />
         </div>
         <Link to="/crafts" className="btn">Explore the crafts</Link>
       </section>
@@ -129,7 +129,6 @@ function Home({ artisanOffers }) {
     </section>
   );
 }
-
 
 /* -------------------------- Artisans List -------------------------- */
 function ArtisanList({ artisanOffers }) {
@@ -219,31 +218,30 @@ function Crafts() {
     { image: "https://media.istockphoto.com/id/1493177152/fr/photo/gros-plan-dun-artisan-sculptant-une-sculpture-desprit-en-bois-avec-maillet-et-ciseau-%C3%A0-la.webp?a=1&b=1&s=612x612&w=0&k=20&c=WQqELiGecoOggWv06d6sdwGTBNQsf0WAJBckPxuGXGc=", title: "Wood carving / marquetry", description: "Carvers use cedar, thuya or lemon wood to produce doors, ceilings, furniture and small boxes. Marquetry adds inlays of bone, shell, or metal to form floral and geometric designs." }, 
 
     { image: "https://plus.unsplash.com/premium_photo-1675623429517-7e1fe71fb300?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Q2FsbGlncmFwaHklMjAlMjYlMjBpbGx1bWluYXRpb24lMjBtYWtpbmd8ZW58MHx8MHx8fDA%3D", title: "Calligraphy & illumination", description: "Scribes use reed pens and natural inks to write verses or proverbs in elegant Arabic scripts, then embellish with gold leaf, geometric borders or floral motifs." },
+    
   ];
 
-
   return (
-    <section className="crafts-section">
-      <h2>Crafts</h2>
-      <ul className="card-list">
-        {crafts.map((c, index) => (
-          <li key={index} className="card">
-            {c.image && <img src={c.image} alt={c.title} className="card-image" />}
-            <h3>{c.title}</h3>
-            <p>{c.description}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+  <section className="crafts-section">
+  <h2>Our Crafts</h2>
+  <div className="crafts-container">
+    {crafts.map((c, i) => (
+      <div className="craft-item" key={i}>
+        <img src={c.image} alt={c.title} />
+        <h3>{c.title}</h3>
+        <p>{c.description}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
   );
 }
 
 /* -------------------------- Employer Form -------------------------- */
 function EmployerForm() {
-  const crafts = [
-    "Pottery","Jewelry","Tailoring","Weaving","Glass Making",
-    "Ceramics","Wrought Iron","Zellige","Wood Carving / Marquetry","Calligraphy & Illumination"
-  ];
+  const crafts = ["Pottery","Jewelry","Tailoring","Weaving","Glass Making",
+    "Ceramics","Wrought Iron","Zellige","Wood Carving / Marquetry","Calligraphy & Illumination"];
 
   return (
     <section>
@@ -251,6 +249,7 @@ function EmployerForm() {
       <form className="form">
         <input type="text" placeholder="Nom de l'entreprise" />
         <input type="email" placeholder="Email" />
+        <input type="text" placeholder="Ville" />
         <select>
           <option value="">Sélectionner un métier artisanal</option>
           {crafts.map((c, i) => <option key={i} value={c}>{c}</option>)}
@@ -270,7 +269,14 @@ function EmployerForm() {
 /* -------------------------- Employee Form -------------------------- */
 function EmployeeForm({ setArtisanOffers, setStages }) {
   const crafts = ["Pottery","Jewelry","Tailoring","Weaving","Glass Making","Ceramics"];
-  const [form, setForm] = useState({ name: "", email: "", craft: "", type: "", description: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    craft: "",
+    type: "",
+    description: "",
+    ville: ""
+  });
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -282,7 +288,7 @@ function EmployeeForm({ setArtisanOffers, setStages }) {
         id: newId,
         title: form.name,
         metier: form.craft,
-        location: "Remote",
+        location: form.ville,
         experience: "N/A",
         description: form.description,
         email: form.email
@@ -292,14 +298,14 @@ function EmployeeForm({ setArtisanOffers, setStages }) {
         id: newId,
         title: `Stage – ${form.craft} (${form.name})`,
         metier: form.craft,
-        location: "Remote",
+        location: form.ville,
         experience: "N/A",
         description: form.description,
         email: form.email
       }]);
     }
 
-    setForm({ name: "", email: "", craft: "", type: "", description: "" });
+    setForm({ name: "", email: "", craft: "", type: "", description: "", ville:"" });
     alert("Your information has been published!");
   };
 
@@ -309,6 +315,8 @@ function EmployeeForm({ setArtisanOffers, setStages }) {
       <form className="form" onSubmit={handleSubmit}>
         <input name="name" value={form.name} onChange={handleChange} type="text" placeholder="Nom complet" />
         <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="Email" />
+        <input name="ville" value={form.ville} onChange={handleChange} type="text" placeholder="Ville" />
+
         <select name="craft" value={form.craft} onChange={handleChange}>
           <option value="">Métier artisanal recherché</option>
           {crafts.map((c, i) => <option key={i} value={c}>{c}</option>)}
