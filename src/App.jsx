@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import "./App.css"; 
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import "./App.css";
 
 /* -------------------------- Initial Mock Data -------------------------- */
 const INITIAL_ARTISAN_OFFERS = [
@@ -19,6 +19,7 @@ const INITIAL_STAGES = [
 function App() {
   const [artisanOffers, setArtisanOffers] = useState(INITIAL_ARTISAN_OFFERS);
   const [stages, setStages] = useState(INITIAL_STAGES);
+  const [employerOffers, setEmployerOffers] = useState([]);
 
   return (
     <BrowserRouter>
@@ -29,11 +30,9 @@ function App() {
           <Route path="/artisan" element={<ArtisanList artisanOffers={artisanOffers} />} />
           <Route path="/stage" element={<StageList stages={stages} />} />
           <Route path="/crafts" element={<Crafts />} />
-          <Route path="/employer" element={<EmployerForm />} />
-          <Route
-            path="/employee"
-            element={<EmployeeForm setArtisanOffers={setArtisanOffers} setStages={setStages} />}
-          />
+          <Route path="/employer" element={<EmployerForm setEmployerOffers={setEmployerOffers} />} />
+          <Route path="/employer-offers" element={<EmployerOffersList employerOffers={employerOffers} />} />
+          <Route path="/employee" element={<EmployeeForm setArtisanOffers={setArtisanOffers} setStages={setStages} />} />
         </Routes>
       </main>
       <Footer />
@@ -218,50 +217,89 @@ function Crafts() {
     { image: "https://media.istockphoto.com/id/1493177152/fr/photo/gros-plan-dun-artisan-sculptant-une-sculpture-desprit-en-bois-avec-maillet-et-ciseau-%C3%A0-la.webp?a=1&b=1&s=612x612&w=0&k=20&c=WQqELiGecoOggWv06d6sdwGTBNQsf0WAJBckPxuGXGc=", title: "Wood carving / marquetry", description: "Carvers use cedar, thuya or lemon wood to produce doors, ceilings, furniture and small boxes. Marquetry adds inlays of bone, shell, or metal to form floral and geometric designs." }, 
 
     { image: "https://plus.unsplash.com/premium_photo-1675623429517-7e1fe71fb300?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Q2FsbGlncmFwaHklMjAlMjYlMjBpbGx1bWluYXRpb24lMjBtYWtpbmd8ZW58MHx8MHx8fDA%3D", title: "Calligraphy & illumination", description: "Scribes use reed pens and natural inks to write verses or proverbs in elegant Arabic scripts, then embellish with gold leaf, geometric borders or floral motifs." },
-    
-  ];
+  ]
 
   return (
-  <section className="crafts-section">
-  <h2>Our Crafts</h2>
-  <div className="crafts-container">
-    {crafts.map((c, i) => (
-      <div className="craft-item" key={i}>
-        <img src={c.image} alt={c.title} />
-        <h3>{c.title}</h3>
-        <p>{c.description}</p>
+    <section className="crafts-section">
+      <h2>Our Crafts</h2>
+      <div className="crafts-container">
+        {crafts.map((c, i) => (
+          <div className="craft-item" key={i}>
+            <img src={c.image} alt={c.title} />
+            <h3>{c.title}</h3>
+            <p>{c.description}</p>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-</section>
-
+    </section>
   );
 }
 
 /* -------------------------- Employer Form -------------------------- */
-function EmployerForm() {
+function EmployerForm({ setEmployerOffers }) {
+  const navigate = useNavigate();
   const crafts = ["Pottery","Jewelry","Tailoring","Weaving","Glass Making",
     "Ceramics","Wrought Iron","Zellige","Wood Carving / Marquetry","Calligraphy & Illumination"];
+
+  const [form, setForm] = useState({
+    company: "",
+    email: "",
+    ville: "",
+    craft: "",
+    type: "",
+    description: ""
+  });
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newId = Date.now().toString();
+    setEmployerOffers(prev => [...prev, { id: newId, ...form }]);
+    setForm({ company: "", email: "", ville: "", craft: "", type: "", description: "" });
+    navigate("/employer-offers");
+  };
 
   return (
     <section>
       <h2>Employer Form</h2>
-      <form className="form">
-        <input type="text" placeholder="Nom de l'entreprise" />
-        <input type="email" placeholder="Email" />
-        <input type="text" placeholder="Ville" />
-        <select>
+      <form className="form" onSubmit={handleSubmit}>
+        <input name="company" value={form.company} onChange={handleChange} placeholder="Nom de l'entreprise" />
+        <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="Email" />
+        <input name="ville" value={form.ville} onChange={handleChange} placeholder="Ville" />
+        <select name="craft" value={form.craft} onChange={handleChange}>
           <option value="">Sélectionner un métier artisanal</option>
           {crafts.map((c, i) => <option key={i} value={c}>{c}</option>)}
         </select>
-        <select>
+        <select name="type" value={form.type} onChange={handleChange}>
           <option value="">Type d'offre</option>
           <option value="job">Emploi</option>
           <option value="internship">Stage</option>
         </select>
-        <textarea placeholder="Description de l'offre"></textarea>
+        <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description de l'offre"></textarea>
         <button type="submit">Publier l'offre</button>
       </form>
+    </section>
+  );
+}
+
+/* -------------------------- Employer Offers List -------------------------- */
+function EmployerOffersList({ employerOffers }) {
+  if (employerOffers.length === 0) return <p>No employer offers yet.</p>;
+
+  return (
+    <section>
+      <h2>Employer Offers</h2>
+      <ul className="card-list">
+        {employerOffers.map(o => (
+          <li key={o.id} className="card">
+            <h3>{o.company}</h3>
+            <p>{o.craft} — {o.ville} — {o.type}</p>
+            <p>{o.description}</p>
+            <p><strong>Email:</strong> {o.email}</p>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -304,7 +342,6 @@ function EmployeeForm({ setArtisanOffers, setStages }) {
         email: form.email
       }]);
     }
-
     setForm({ name: "", email: "", craft: "", type: "", description: "", ville:"" });
     alert("Your information has been published!");
   };
@@ -316,7 +353,6 @@ function EmployeeForm({ setArtisanOffers, setStages }) {
         <input name="name" value={form.name} onChange={handleChange} type="text" placeholder="Nom complet" />
         <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="Email" />
         <input name="ville" value={form.ville} onChange={handleChange} type="text" placeholder="Ville" />
-
         <select name="craft" value={form.craft} onChange={handleChange}>
           <option value="">Métier artisanal recherché</option>
           {crafts.map((c, i) => <option key={i} value={c}>{c}</option>)}
