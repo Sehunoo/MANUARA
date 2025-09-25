@@ -103,7 +103,7 @@ html, body, #root, main.container, .header, .footer {
 }
 
 .nav a:hover {
-  color: #fef3c7;
+  color: #F5F5DC;
 }
 
 /* ---------- Footer ---------- */
@@ -132,7 +132,8 @@ html, body, #root, main.container, .header, .footer {
 
 .btn:hover,
 .btn-small:hover {
-  background-color: #8c4c1a;
+  background-color: #F5F5DC;
+  color: #6b3a14;
   transform: translateY(-2px);
 }
 
@@ -223,7 +224,7 @@ html, body, #root, main.container, .header, .footer {
 }
 
 .filter-buttons button:hover {
-  background-color: #ddd;
+  background-color: #F5F5DC;
 }
 
 .filter-buttons .active {
@@ -407,12 +408,41 @@ html, body, #root, main.container, .header, .footer {
   }
 }
 /* ---------- Crafts Preview Section ---------- */ 
-.home-crafts-preview { 
+.home-crafts-preview {
   text-align: center;
-   margin-top: 4rem;
-    justify-content: center;
-     align-items: center;
-      height: auto;
-       width: 100%;
-        max-width: 1200px; }
-         .crafts-preview { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 1rem; } .crafts-preview img { border-radius: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); object-fit: cover; width: 200px; height: 200px; transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth animation */ } .crafts-preview img:hover { transform: scale(1.05); /* zoom in slightly */ box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* deeper shadow */ cursor: pointer; /* pointer cursor */ }
+  margin: 4rem auto;
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-crafts-preview h2 {
+  margin-bottom: 2rem;
+  color: #6b3a14;
+}
+
+.crafts-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.crafts-preview img {
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.crafts-preview img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
