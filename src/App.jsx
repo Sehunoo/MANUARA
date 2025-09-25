@@ -23,19 +23,21 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
-      <main className="container">
-        <Routes>
-          <Route path="/" element={<Home artisanOffers={artisanOffers} />} />
-          <Route path="/artisan" element={<ArtisanList artisanOffers={artisanOffers} />} />
-          <Route path="/stage" element={<StageList stages={stages} />} />
-          <Route path="/crafts" element={<Crafts />} />
-          <Route path="/employer" element={<EmployerForm setEmployerOffers={setEmployerOffers} />} />
-          <Route path="/employer-offers" element={<EmployerOffersList employerOffers={employerOffers} />} />
-          <Route path="/employee" element={<EmployeeForm setArtisanOffers={setArtisanOffers} setStages={setStages} />} />
-        </Routes>
-      </main>
-      <Footer />
+      <div className="page-container">
+        <Header />
+        <main className="container">
+          <Routes>
+            <Route path="/" element={<Home artisanOffers={artisanOffers} />} />
+            <Route path="/artisan" element={<ArtisanList artisanOffers={artisanOffers} />} />
+            <Route path="/stage" element={<StageList stages={stages} />} />
+            <Route path="/crafts" element={<Crafts />} />
+            <Route path="/employer" element={<EmployerForm setEmployerOffers={setEmployerOffers} />} />
+            <Route path="/employer-offers" element={<EmployerOffersList employerOffers={employerOffers} />} />
+            <Route path="/employee" element={<EmployeeForm setArtisanOffers={setArtisanOffers} setStages={setStages} />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

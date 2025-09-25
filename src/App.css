@@ -6,6 +6,21 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* Sticky footer layout */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
 body, html {
   margin: 0;
   padding: 0;
