@@ -1,25 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
 import "./App.css";
 
-/* -------------------------- Initial Mock Data -------------------------- */
-const INITIAL_ARTISAN_OFFERS = [
-  { id: "a1", title: "Maâlem Zellige", metier: "Zellige", location: "Fès", experience: "5+ ans", description: "Atelier traditionnel cherche artisan confirmé pour projets de riads." },
-  { id: "a2", title: "Menuisier Ebéniste", metier: "Menuiserie", location: "Marrakech", experience: "2-5 ans", description: "Fabrication de portes sculptées et mobilier sur mesure." },
-  { id: "a3", title: "Tisserand", metier: "Tissage", location: "Tétouan", experience: "0-2 ans", description: "Coopérative cherchant stagiaire motivé pour apprentissage." },
-  { id: "a4", title: "Ferronnier d’art", metier: "Ferronnerie", location: "Rabat", experience: "5+ ans", description: "Pièces sur mesure pour hôtels et maisons d’hôtes." },
-];
-
-const INITIAL_STAGES = [
-  { id: "s1", title: "Stage – Tissage (3 mois)", metier: "Tissage", location: "Chefchaouen", experience: "0-2 ans", description: "Découverte des métiers du tissage avec maître artisan." },
-  { id: "s2", title: "Stage – Zellige (2 mois)", metier: "Zellige", location: "Fès", experience: "0-2 ans", description: "Initiation à la coupe et pose de zellige traditionnel." },
-];
+/* -------------------------- API Base -------------------------- */
+const API_BASE = "/api"; // Vite dev proxy will forward to backend
 
 /* -------------------------- App -------------------------- */
 function App() {
-  const [artisanOffers, setArtisanOffers] = useState(INITIAL_ARTISAN_OFFERS);
-  const [stages, setStages] = useState(INITIAL_STAGES);
+  const [artisanOffers, setArtisanOffers] = useState([]);
+  const [stages, setStages] = useState([]);
   const [employerOffers, setEmployerOffers] = useState([]);
+
+  // Load data from backend on app start
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [artisansRes, stagesRes] = await Promise.all([
+          fetch(`${API_BASE}/artisans`),
+          fetch(`${API_BASE}/stages`)
+        ]);
+        const artisansJson = await artisansRes.json();
+        const stagesJson = await stagesRes.json();
+        setArtisanOffers(Array.isArray(artisansJson.data) ? artisansJson.data : artisansJson);
+        setStages(Array.isArray(stagesJson.data) ? stagesJson.data : stagesJson);
+      } catch (err) {
+        console.error("Failed to load data from backend:", err);
+      }
+    };
+    loadData();
+  }, []);
+
+  // Handlers to create data via backend
+  const addArtisan = async (payload) => {
+    const res = await fetch(`${API_BASE}/artisans`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+    const newItem = json.data ?? json;
+    setArtisanOffers(prev => [newItem, ...prev]);
+    return newItem;
+  };
+
+  const addStage = async (payload) => {
+    const res = await fetch(`${API_BASE}/stages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+    const newItem = json.data ?? json;
+    setStages(prev => [newItem, ...prev]);
+    return newItem;
+  };
 
   return (
     <BrowserRouter>
@@ -33,7 +67,7 @@ function App() {
             <Route path="/crafts" element={<Crafts />} />
             <Route path="/employer" element={<EmployerForm setEmployerOffers={setEmployerOffers} />} />
             <Route path="/employer-offers" element={<EmployerOffersList employerOffers={employerOffers} />} />
-            <Route path="/employee" element={<EmployeeForm setArtisanOffers={setArtisanOffers} setStages={setStages} />} />
+            <Route path="/employee" element={<EmployeeForm onCreateArtisan={addArtisan} onCreateStage={addStage} />} />
           </Routes>
         </main>
         <Footer />
@@ -307,7 +341,7 @@ function EmployerOffersList({ employerOffers }) {
 }
 
 /* -------------------------- Employee Form -------------------------- */
-function EmployeeForm({ setArtisanOffers, setStages }) {
+function EmployeeForm({ onCreateArtisan, onCreateStage }) {
   const crafts = ["Pottery","Jewelry","Tailoring","Weaving","Glass Making","Ceramics"];
   const [form, setForm] = useState({
     name: "",
@@ -320,32 +354,37 @@ function EmployeeForm({ setArtisanOffers, setStages }) {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newId = Date.now().toString();
-    if (form.type === "job") {
-      setArtisanOffers(prev => [...prev, {
-        id: newId,
-        title: form.name,
-        metier: form.craft,
-        location: form.ville,
-        experience: "N/A",
-        description: form.description,
-        email: form.email
-      }]);
-    } else if (form.type === "internship") {
-      setStages(prev => [...prev, {
-        id: newId,
-        title: `Stage – ${form.craft} (${form.name})`,
-        metier: form.craft,
-        location: form.ville,
-        experience: "N/A",
-        description: form.description,
-        email: form.email
-      }]);
+    try {
+      if (form.type === "job") {
+        await onCreateArtisan({
+          title: form.name,
+          metier: form.craft,
+          location: form.ville,
+          experience: "N/A",
+          description: form.description,
+          email: form.email
+        });
+      } else if (form.type === "internship") {
+        await onCreateStage({
+          title: `Stage – ${form.craft} (${form.name})`,
+          metier: form.craft,
+          location: form.ville,
+          experience: "N/A",
+          description: form.description,
+          email: form.email
+        });
+      } else {
+        alert("Veuillez choisir un type (Emploi ou Stage)");
+        return;
+      }
+      setForm({ name: "", email: "", craft: "", type: "", description: "", ville:"" });
+      alert("Your information has been published!");
+    } catch (err) {
+      console.error(err);
+      alert("Échec de la publication. Veuillez réessayer.");
     }
-    setForm({ name: "", email: "", craft: "", type: "", description: "", ville:"" });
-    alert("Your information has been published!");
   };
 
   return (
