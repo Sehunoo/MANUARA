@@ -1,9 +1,22 @@
+/* Import display font similar to the logo */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
+
 /* ---------- Reset & Base ---------- */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- Brand Theme Variables ---------- */
+:root {
+  --brand-gold: #000000;            /* brand title in header set to black */
+  --brand-accent: #f0b429;          /* warm accent gold */
+  --brand-brown: #6b3a14;           /* primary dark brand tone */
+  --brand-brown-dark: #5a2f11;      /* deeper shade for gradients */
+  --header-start: #8a6d2f;          /* golden-brown start */
+  --header-end: #3f2e0f;            /* deep brown end */
 }
 
 /* Sticky footer layout */
@@ -81,7 +94,7 @@ html, body, #root, main.container, .header, .footer {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0; /* no gap so the brand name sits as close as possible to the logo */
   white-space: nowrap;
 }
 
@@ -89,19 +102,23 @@ html, body, #root, main.container, .header, .footer {
   width: 45px;
   height: 45px;
   object-fit: cover;
+  display: block; /* remove inline image baseline gap */
   
   /* Blend black areas out against the header gradient */
   mix-blend-mode: screen;
 }
 
 .brand-name {
-  font-size: 1.6rem;
+  font-size: 1.1rem; /* smaller brand text */
   font-weight: 700;
-  color: #d0a414; /* solid metallic gold to match logo */
-  font-family: 'Cinzel', serif; /* classic display font to match logo feel */
+  color: var(--brand-gold); /* metallic gold to match logo */
+  font-family: 'Cinzel Decorative', serif; /* decorative serif to match logo style */
   text-transform: uppercase;
   letter-spacing: 0;
-  margin-left: 0; /* ensure no extra gap next to the logo */
+  line-height: 1; /* align vertically with logo */
+  margin-left: -1px; /* subtle tuck near logo */
+  position: relative;
+  top: 1px; /* nudge text to align perfectly with logo */
 }
 
 .nav {
@@ -124,11 +141,11 @@ html, body, #root, main.container, .header, .footer {
 
 .nav a.active {
   color: #fff;
-  border-bottom-color: #f0b429;
+  border-bottom-color: var(--brand-accent);
 }
 
 .nav a:focus-visible {
-  outline: 2px solid #f0b429;
+  outline: 2px solid var(--brand-accent);
   outline-offset: 2px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.08);
@@ -150,7 +167,7 @@ html, body, #root, main.container, .header, .footer {
   display: inline-block;
   padding: 0.8rem 1.5rem;
   border-radius: 30px;
-  background-color: #f0b429;
+  background-color: var(--brand-accent);
   color: #222;
   font-weight: 600;
   font-size: 1rem;
@@ -343,7 +360,7 @@ html, body, #root, main.container, .header, .footer {
 
 .stat:hover {
   transform: translateY(-6px) scale(1.03);
-  background-color: #f0b429;
+  background-color: var(--brand-accent);
   color: #fff;
   box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
@@ -357,16 +374,30 @@ html, body, #root, main.container, .header, .footer {
   color: #6b3a14;
 }
 
+/* Decorative underline for form title */
+.form-title::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 3px;
+  margin: 0.5rem auto 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--brand-brown), var(--brand-accent));
+}
+
 .form {
   display: grid;
   gap: 1rem;
-  max-width: 560px;
+  max-width: 720px;
   margin: 2rem auto;
-  padding: 1.25rem;
-  background: #ffffff;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.8);
   border-radius: 14px;
   border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+  backdrop-filter: blur(6px);
 }
 
 .form input,
@@ -379,7 +410,8 @@ html, body, #root, main.container, .header, .footer {
   width: 100%;
   background-color: #fff;
   color: #222;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, transform 0.12s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03) inset;
 }
 
 .form input:hover,
@@ -392,8 +424,35 @@ html, body, #root, main.container, .header, .footer {
 .form select:focus,
 .form textarea:focus {
   outline: none;
-  border-color: #f0b429; /* gold */
+  border-color: var(--brand-accent); /* gold */
   box-shadow: 0 0 0 4px rgba(240, 180, 41, 0.18);
+  transform: translateY(-1px);
+}
+
+/* Validation states (native HTML5) */
+.form input:invalid,
+.form select:invalid,
+.form textarea:invalid {
+  border-color: #ef4444; /* red */
+}
+
+.form input:valid,
+.form select:valid,
+.form textarea:valid {
+  border-color: #86efac; /* green-ish */
+}
+
+/* Subtle shake on invalid focus */
+.form input:invalid:focus,
+.form select:invalid:focus,
+.form textarea:invalid:focus {
+  animation: form-shake 0.18s ease-in-out 0s 1;
+}
+
+@keyframes form-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
 }
 
 .form input::placeholder,
@@ -416,24 +475,47 @@ html, body, #root, main.container, .header, .footer {
   min-height: 140px;
   resize: vertical;
   line-height: 1.5;
+  grid-column: 1 / -1; /* full width */
 }
 
 .form button {
-  background: linear-gradient(180deg, #6b3a14, #5a2f11);
+  background: linear-gradient(180deg, var(--brand-brown), var(--brand-brown-dark));
   color: #fff;
   border: none;
   border-radius: 28px;
-  padding: 0.9rem 1.4rem;
+  padding: 0.95rem 1.6rem;
   font-weight: 700;
   letter-spacing: 0.2px;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.12s ease, box-shadow 0.25s ease, background 0.25s ease;
   box-shadow: 0 8px 18px rgba(107,58,20,0.28);
+  grid-column: 1 / -1; /* full width button */
+  justify-self: center;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
 }
 
 .form button:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(107,58,20,0.34);
+}
+
+/* Shimmer effect on button hover */
+.form button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  transform: skewX(-20deg);
+}
+
+.form button:hover::after {
+  left: 120%;
+  transition: left 0.6s ease;
 }
 
 .form button:active {
@@ -491,7 +573,7 @@ html, body, #root, main.container, .header, .footer {
 }
 
 .cta .btn:hover {
-  background-color: #f0b429;
+  background-color: var(--brand-accent);
   color: #aa0b0b;
   box-shadow: 0 5px 5px rgba(0,0,0,0.2);
 }
