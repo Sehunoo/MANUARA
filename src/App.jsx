@@ -80,9 +80,19 @@ function Home({ artisanOffers }) {
   return (
     <section className="home">
       <section className="home-hero">
-        <h1>Welcome to MANUARA Morocco</h1>
-        <p>Connecting artisans and employers for a preserved Moroccan craftsmanship.</p>
-        <Link to="/artisan" className="btn">See the offers</Link>
+        <div className="home-hero__content">
+          <span className="home-hero__kicker">Craftsmanship • Community • Careers</span>
+          <h1>
+            Welcome to <span className="text-highlight">MANUARA</span> Morocco
+          </h1>
+          <p>
+            Discover Morocco’s artisanal heritage. Find opportunities, publish offers, and connect with masters across the kingdom.
+          </p>
+          <div className="btn-group">
+            <Link to="/artisan" className="btn btn-primary">See the offers</Link>
+            <Link to="/employer" className="btn btn-secondary">Post an offer</Link>
+          </div>
+        </div>
       </section>
 
       <section className="featured-offers">
